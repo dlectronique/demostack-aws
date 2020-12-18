@@ -3,10 +3,10 @@
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
-    organization = "emea-se-playground-2019"
+    organization = "dlectronique"
 
     workspaces {
-      name = "ricardo-aws-demostack"
+      name = "dlectronique-aws-demostack-new"
     }
   }
 }
@@ -17,9 +17,9 @@ data "terraform_remote_state" "emea_se_playground_tls_root_certificate" {
 
   config = {
     hostname     = "app.terraform.io"
-    organization = "emea-se-playground-2019"
+    organization = "dlectronique"
     workspaces = {
-      name = "tls-root-certificate"
+      name = "terraform-tls-certificate""
     }
   } //config
 }
@@ -29,16 +29,16 @@ data "terraform_remote_state" "dns" {
 
   config = {
     hostname     = "app.terraform.io"
-    organization = "emea-se-playground-2019"
+    organization = "dlectronique"
     workspaces = {
-      name = "ricardo-dns"
+      name = "dns-multicloud"
     }
   } //network
 }
 # //--------------------------------------------------------------------
 
 module "primarycluster" {
-  source               = "git::https://github.com/GuyBarros/terraform-aws-demostack.git//modules?ref=v0.0.5"
+  source               = "git::https://github.com/GuyBarros/terraform-aws-demostack.git//modules?ref=v0.0.9"
   # source               = "git::https://github.com/GuyBarros/terraform-aws-demostack.git//modules"
   owner                = var.owner
   region               = var.primary_region
@@ -83,7 +83,7 @@ module "primarycluster" {
 
 module "secondarycluster" {
   # source               = "git::https://github.com/GuyBarros/terraform-aws-demostack.git//modules"
-  source               = "git::https://github.com/GuyBarros/terraform-aws-demostack.git//modules?ref=v0.0.5"
+  source               = "git::https://github.com/GuyBarros/terraform-aws-demostack.git//modules?ref=v0.0.9"
   owner                = var.owner
   region               = var.secondary_region
   namespace            = var.secondary_namespace
